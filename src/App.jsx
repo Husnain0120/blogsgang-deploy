@@ -45,17 +45,30 @@ function App() {
 
 export default App
 
+
 export const ProtectedRouteForAdmin = ({ children }) => {
-  const admin = JSON.parse(localStorage.getItem('admin'))
-  if (admin?.user?.email === "adminuser@gmail.com") {
-    return children
-    
+  const admin = JSON.parse(localStorage.getItem('admin'));
+  const adminEmail1 = import.meta.env.VITE_ADMIN_EMAIL_1;
+  const adminEmail2 = import.meta.env.VITE_ADMIN_EMAIL_2;
+  
+  if (admin?.user?.email === adminEmail1 || admin?.user?.email === adminEmail2) {
+    return children;
+  } else {
+    return <Navigate to={'/adminlogin'} />;
   }
-  if (admin?.user?.email === "adminuser2@gmail.com") {
-    return children
-    
-  }
-  else {
-    return <Navigate to={'/adminlogin'} />
-  }
-}
+};
+
+
+
+
+// export const ProtectedRouteForAdmin = ({ children }) => {
+//   const admin = JSON.parse(localStorage.getItem('admin'));
+//   const adminEmail1 = import.meta.env.REACT_APP_ADMIN_EMAIL_1;
+//   const adminEmail2 = import.meta.env.REACT_APP_ADMIN_EMAIL_2;
+  
+//   if (admin?.user?.email === adminEmail1 || admin?.user?.email === adminEmail2) {
+//     return children;
+//   } else {
+//     return <Navigate to={'/adminlogin'} />;
+//   }
+// };
