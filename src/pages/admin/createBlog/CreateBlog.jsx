@@ -19,9 +19,9 @@ function CreateBlog() {
     const { mode } = context;
 
     const [blogs, setBlogs] = useState({
-        title:'',
-        category:'',
-        content:'',
+        title: '', 
+        category: '',
+        content: '',
         time: Timestamp.now(),
     });
     const [thumbnail, setthumbnail] = useState();
@@ -35,12 +35,14 @@ function CreateBlog() {
         return { __html: c };
     }
 
-    const addPost = async ()=>{
-        if (blogs.title===''||blogs.category===''||blogs.content==='',blogs.thumbnail==='') {
-            return toast.error("All fields are required")
+    const addPost = async () => {
+        const { title, category, content } = blogs; // Destructure blogs object
+        if (title === '' || category === '' || content === '' || !thumbnail) {
+            return toast.error("All fields are required");
         }
-        uploadImage()
+        uploadImage();
     }
+    
     const uploadImage = () => {
         if (!thumbnail) return;
         const imageRef = ref(storage, `blogimage/${thumbnail.name}`);
@@ -183,7 +185,7 @@ function CreateBlog() {
 
                 {/* Four Editor  */}
                 <Editor
-                    apiKey='xzgxes64117sl04vehg24pwr4mh21cwngmngejh29riqll7v'
+                    apiKey = 'import.meta.env.VITE_TINCY_API_KEY'
                     onEditorChange={(newValue, editor) => {
                         setBlogs({ ...blogs, content: newValue });
                         settext(editor.getContent({ format: 'text' }));
