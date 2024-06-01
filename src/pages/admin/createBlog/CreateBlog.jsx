@@ -3,16 +3,16 @@ import { Editor } from '@tinymce/tinymce-react';
 import { BsFillArrowLeftCircleFill } from "react-icons/bs"
 import myContext from '../../../context/data/MyContext';
 import { Link, useNavigate } from "react-router-dom";
-
+import './blogs.css'
 import { Timestamp, addDoc, collection } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { apiKey } from './key.js';
 import { fireDb, storage } from '../../../firebase/FirebaseConfig';
 import toast from 'react-hot-toast';
 import {
     Button,
     Typography,
 } from "@material-tailwind/react";
-const apiKey = process.env.REACT_APP_TINCY_API_KEY;
 
 function CreateBlog() {
     const navigate = useNavigate();
@@ -89,7 +89,7 @@ function CreateBlog() {
         <div className=' container mx-auto max-w-5xl py-6'>
             {loading && ( // Render loading indicator if loading is true
                 <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="text-white text-2xl font-bold">Loading...</div>
+                   <div class="spinner"></div>
                 </div>
             )}
             <div className="p-5" style={{
@@ -197,7 +197,6 @@ function CreateBlog() {
                 </div>
 
                 {/* Four Editor  */}
-            
                 <Editor
                     apiKey={apiKey}
                     onEditorChange={(newValue, editor) => {
