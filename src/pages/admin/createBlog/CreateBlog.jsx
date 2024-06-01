@@ -12,23 +12,23 @@ import {
     Button,
     Typography,
 } from "@material-tailwind/react";
+const apiKey = process.env.REACT_APP_TINCY_API_KEY;
+
 function CreateBlog() {
-    const navigate= useNavigate()
-  
+    const navigate = useNavigate();
     const context = useContext(myContext);
     const { mode } = context;
 
     const [blogs, setBlogs] = useState({
-        title: '', 
+        title: '',
         category: '',
         content: '',
         time: Timestamp.now(),
     });
     const [thumbnail, setthumbnail] = useState();
+    const [loading, setLoading] = useState(false); // State variable for loading indicator
 
     const [text, settext] = useState('');
-    console.log("Value: ",);
-    console.log("text: ", text);
 
     // Create markup function 
     function createMarkup(c) {
@@ -36,13 +36,16 @@ function CreateBlog() {
     }
 
     const addPost = async () => {
-        const { title, category, content } = blogs; // Destructure blogs object
+        const { title, category, content } = blogs;
         if (title === '' || category === '' || content === '' || !thumbnail) {
             return toast.error("All fields are required");
         }
+
+        setLoading(true); // Start loading
+
         uploadImage();
     }
-    
+
     const uploadImage = () => {
         if (!thumbnail) return;
         const imageRef = ref(storage, `blogimage/${thumbnail.name}`);
@@ -62,23 +65,33 @@ function CreateBlog() {
                                 year: "numeric",
                             }
                         )
-                    })
-                    navigate('/dashboard')
-                    toast.success('Post Added Successfully');
+                    }).then(() => {
+                        setLoading(false); // Stop loading
+                        navigate('/dashboard')
+                        toast.success('Post Added Successfully');
+                    });
 
 
                 } catch (error) {
+                    setLoading(false); // Stop loading
                     toast.error(error)
                     console.log(error)
                 }
             });
         });
     }
+
     useEffect(() => {
         window.scrollTo(0, 0)
- }, [])
+    }, [])
+
     return (
         <div className=' container mx-auto max-w-5xl py-6'>
+            {loading && ( // Render loading indicator if loading is true
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="text-white text-2xl font-bold">Loading...</div>
+                </div>
+            )}
             <div className="p-5" style={{
                 background: mode === 'dark'
                     ? '#353b48'
@@ -148,11 +161,11 @@ function CreateBlog() {
                     <input
                         label="Enter your Title"
                         value={blogs.title}
-                        onChange={(e)=>setBlogs({...blogs,title : e.target.value})}
+                        onChange={(e) => setBlogs({ ...blogs, title: e.target.value })}
                         className={`shadow-[inset_0_0_4px_rgba(0,0,0,0.6)] w-full rounded-md p-1.5 
                  outline-none ${mode === 'dark'
-                 ? 'placeholder-black'
-                 : 'placeholder-black'}`}
+                            ? 'placeholder-black'
+                            : 'placeholder-black'}`}
                         placeholder="Enter Your Title"
                         style={{
                             background: mode === 'dark'
@@ -166,13 +179,13 @@ function CreateBlog() {
                 {/* Third Category Input  */}
                 <div className="mb-3">
                     <input
-                     value={blogs.category}
-                     onChange={(e)=>setBlogs({...blogs,category : e.target.value})}
+                        value={blogs.category}
+                        onChange={(e) => setBlogs({ ...blogs, category: e.target.value })}
                         label="Enter your Category"
                         className={`shadow-[inset_0_0_4px_rgba(0,0,0,0.6)] w-full rounded-md p-1.5 
                  outline-none ${mode === 'dark'
-                 ? 'placeholder-black'
-                 : 'placeholder-black'}`}
+                            ? 'placeholder-black'
+                            : 'placeholder-black'}`}
                         placeholder="Enter Your Category"
                         style={{
                             background: mode === 'dark'
@@ -184,8 +197,9 @@ function CreateBlog() {
                 </div>
 
                 {/* Four Editor  */}
+            
                 <Editor
-                    apiKey = 'import.meta.env.VITE_TINCY_API_KEY'
+                    apiKey={apiKey}
                     onEditorChange={(newValue, editor) => {
                         setBlogs({ ...blogs, content: newValue });
                         settext(editor.getContent({ format: 'text' }));
