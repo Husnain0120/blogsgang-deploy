@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import { BsFillArrowLeftCircleFill } from "react-icons/bs"
+import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import myContext from '../../../context/data/MyContext';
 import { Link, useNavigate } from "react-router-dom";
-import './blogs.css'
+import './blogs.css';
 import { Timestamp, addDoc, collection } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { apiKey } from './key.js';
@@ -26,11 +26,10 @@ function CreateBlog() {
         time: Timestamp.now(),
     });
     const [thumbnail, setthumbnail] = useState();
-    const [loading, setLoading] = useState(false); // State variable for loading indicator
+    const [loading, setLoading] = useState(false);
 
     const [text, settext] = useState('');
 
-    // Create markup function 
     function createMarkup(c) {
         return { __html: c };
     }
@@ -41,17 +40,17 @@ function CreateBlog() {
             return toast.error("All fields are required");
         }
 
-        setLoading(true); // Start loading
+        setLoading(true);
 
         uploadImage();
-    }
+    };
 
     const uploadImage = () => {
         if (!thumbnail) return;
         const imageRef = ref(storage, `blogimage/${thumbnail.name}`);
         uploadBytes(imageRef, thumbnail).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url) => {
-                const productRef = collection(fireDb, "blogPost")
+                const productRef = collection(fireDb, "blogPost");
                 try {
                     addDoc(productRef, {
                         blogs,
@@ -66,31 +65,33 @@ function CreateBlog() {
                             }
                         )
                     }).then(() => {
-                        setLoading(false); // Stop loading
-                        navigate('/dashboard')
+                        setLoading(false);
+                        navigate('/dashboard');
                         toast.success('Post Added Successfully');
                     });
-
-
                 } catch (error) {
-                    setLoading(false); // Stop loading
-                    toast.error(error)
-                    console.log(error)
+                    setLoading(false);
+                    toast.error(error);
+                    console.log(error);
                 }
             });
         });
-    }
+    };
 
     useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
-        <div className=' container mx-auto max-w-5xl py-6'>
-            {loading && ( // Render loading indicator if loading is true
-                <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-                   <div class="spinner"></div>
-                </div>
+        <div className='container mx-auto max-w-5xl py-6'>
+            {loading && (
+                <>
+                    <div className="overlay"></div>
+                    <div className="loader">
+                        <span className="loader-text">loading</span>
+                        <span className="load"></span>
+                    </div>
+                </>
             )}
             <div className="p-5" style={{
                 background: mode === 'dark'
