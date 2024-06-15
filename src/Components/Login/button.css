@@ -1,0 +1,28 @@
+.button23 {
+    max-width: 320px; /* Maximum width the button can take */
+    display: flex; /* Flex container to align items */
+    padding: 0.5rem 1.4rem; /* Padding inside the button */
+    font-size: 0.875rem; /* Font size */
+    line-height: 1.25rem; /* Line height */
+    font-weight: 700; /* Bold font weight */
+    text-align: center; /* Center text alignment */
+    text-transform: uppercase; /* Uppercase text */
+    vertical-align: middle; /* Aligns the button vertically */
+    align-items: center; /* Aligns items vertically within flex container */
+    border-radius: 0.5rem; /* Rounded corners */
+    border: 1px solid rgba(0, 0, 0, 0.25); /* Border with opacity */
+    gap: 0.75rem; /* Gap between button content */
+    color: rgb(65, 63, 63); /* Text color */
+    background-color: #fff; /* Background color */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: all .6s ease; /* Smooth transition for hover effects */
+  }
+  
+  .button23 svg {
+    height: 24px; /* Fixed height for SVG icon */
+  }
+  
+  .button23:hover {
+    transform: scale(1.02); /* Scale up slightly on hover */
+  }
+  

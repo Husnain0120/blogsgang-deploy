@@ -35,7 +35,7 @@ export default function AdminLogin() {
 
     return (
         <>
-            <Link to="/">
+            <Link to="/home">
                 <Button className="bg-green-600 rounded-full m-1">
                     <FaArrowLeft />
                 </Button>

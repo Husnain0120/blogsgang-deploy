@@ -10,7 +10,7 @@ function Dashboard() {
     const navigate = useNavigate()
     const logout = ()=>{
         localStorage.clear('admin')
-        navigate('/')
+        navigate('/home')
     }
     useEffect(() => {
         window.scrollTo(0, 0)

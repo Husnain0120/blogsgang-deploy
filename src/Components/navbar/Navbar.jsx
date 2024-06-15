@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { AiOutlineShareAlt, AiOutlineSearch } from 'react-icons/ai'
 import myContext from '../../context/data/MyContext';
 import SearchDialog from "../searchDialog/SearchDialog";
+
 import ShareDialogBox from "../shareDialogBox/ShareDialogBox";
 
 
@@ -31,7 +32,7 @@ const admin = localStorage.getItem('admin')
                 className="p-1 font-normal"
                 style={{ color: mode === 'dark' ? 'white' : 'white' }}
             >
-                <Link to={'/'} className="flex items-center   hover:p-2 p-2 rounded-md hover:bg-blue-gray-300">
+                <Link to={'/home'} className="flex items-center   hover:p-2 p-2 rounded-md hover:bg-blue-gray-300">
                     Home
                 </Link>
             </Typography>
@@ -57,6 +58,17 @@ const admin = localStorage.getItem('admin')
                     Admin Login
                 </Link>
             </Typography>
+            <Typography
+                as="li"
+                variant="small"
+                color="blue-gray"
+                className="p-1 font-normal"
+                style={{ color: mode === 'dark' ? 'white' : 'white' }}
+            >
+                <Link to={'/logout'} className="flex items-center hover:text-red-600  hover:p-2 p-2 rounded-md hover:bg-blue-gray-300">
+                    Logout
+                </Link>
+            </Typography>
         </ul>
     );
 
@@ -71,7 +83,7 @@ const admin = localStorage.getItem('admin')
                 <div className="flex items-center justify-between text-blue-gray-900">
 
                     {/* Home Page Link  */}
-                    <Link to={'/'}>
+                    <Link to={'/home'}>
                         <Typography
                             as="a"
                             className="mr-4 cursor-pointer py-1.5 text-xl font-bold flex gap-2 items-center"

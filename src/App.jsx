@@ -13,14 +13,21 @@ import AdminLogin from "./pages/admin/adminLogin/AdminLogin";
 import Dashboard from "./pages/admin/dashboard/Dashboard";
 import MyState from "./context/data/MyState";
 import CreateBlog from "./pages/admin/createBlog/CreateBlog";
+
 import { Toaster } from "react-hot-toast";
+import SignUp from "./Components/SignUp/SignUp";
+import SignIn from "./Components/Login/SignIn";
+import Logout from "./Components/Logout/Logout";
 
 function App() {
   return (
     <MyState>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
+        <Route path="/" element={<SignUp/>} />
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/logout" element={<Logout />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/allblogs" element={<AllBlogs />} />
           <Route path="/bloginfo/:id" element={<BlogInfo />} />
